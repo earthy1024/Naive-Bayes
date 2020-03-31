@@ -14,24 +14,31 @@ using std::istream;
 
 vector<Image> image_vector;
 vector<int> image_class;
+std::string image_file;
+std::string label_file;
 
-void CreateList(std::string input) {
-    int count = input.size() / (kImageSize * kImageSize);
+void CreateList() {
+    int count = image_file.size() / (kImageSize * kImageSize);
     Image image = Image();
     for (int current = 0; current < count; current++) {
         int char_count = 0;
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) {
-                image.SetPixel(row, col, input[char_count]);
+                image.SetPixel(row, col, image_file[char_count]);
                 char_count++;
             }
         }
-        input.erase(0,kImageSize*kImageSize);
+        image_file.erase(0,kImageSize*kImageSize);
         image_vector.push_back(image);
+        image_class.push_back(label_file[current]);
     }
 }
 
 void RunModel(Model &model) {
+    std::cout << "What is the training file and label file?";
+    std::cin >> model;
+    CreateList();
+
     for (int image_count = 0; image_count < image_vector.size(); image_count++) {
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) {
@@ -55,10 +62,12 @@ double GetShadeValue(Image &image, int row_index, int col_index) {
     }
 }
 
+
 istream& operator>>(istream &input, Model &model) {
     std::string file_name;
-    input >> file_name;
     std::ifstream file;
+    input >> file_name;
+
     file.open(file_name);
     if (file.fail()) {
         std::cout << "Not valid file" << std::endl;
@@ -70,9 +79,15 @@ istream& operator>>(istream &input, Model &model) {
         file_data += file_line;
     }
     file.close();
-
-    CreateList(file_data);
+    if (file_data.find('#') != std::string::npos || file_data.find('+') != std::string::npos) {
+        image_file = file_data;
+    } else {
+        label_file = file_data;
+    }
+    return input;
 }
+
+
 
 }  // namespace bayes
 
