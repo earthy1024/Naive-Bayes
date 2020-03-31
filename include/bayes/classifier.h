@@ -3,6 +3,9 @@
 #ifndef BAYES_CLASSIFIER_H_
 #define BAYES_CLASSIFIER_H_
 
+#include "image.h"
+
+
 
 namespace bayes {
 

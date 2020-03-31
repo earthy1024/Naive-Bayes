@@ -20,8 +20,13 @@ namespace bayes {
 constexpr size_t kImageSize = 28;
 
 class Image {
- private:
+private:
   char pixels_[kImageSize][kImageSize];
+public:
+  char GetPixel(int row_index, int col_index) {
+      return pixels_[row_index][col_index];
+  }
+
 };
 
 }  // namespace bayes

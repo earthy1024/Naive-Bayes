@@ -6,10 +6,14 @@
 #include "image.h"
 
 #include <cstdlib>
-
+#include <istream>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
 
 namespace bayes {
-
+using std::istream;
 /*
  * We've given you a starter struct to represent the model.
  * You are totally allowed to delete, change, move, rename, etc. this struct
@@ -47,10 +51,15 @@ class Model {
   //
   // probs[0][0][0][1] is the computed probability that a pixel at
   // [0][0] for class 0 is shaded.
- private:
+ public:
   double probs_[kImageSize][kImageSize][kNumClasses][kNumShades];
 };
+istream& operator>>(istream &input, Model &model);
 
+void RunModel(Model &model);
+
+double GetShadeValue(Image &image, int row_index, int col_index);
 }  // namespace bayes
+
 
 #endif  // BAYES_MODEL_H_

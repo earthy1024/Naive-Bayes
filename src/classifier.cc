@@ -7,6 +7,9 @@
 
 
 namespace bayes {
-
+void Create() {
+    Model class_model = Model();
+    RunModel(class_model);
+}
 }  // namespace bayes
 

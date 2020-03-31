@@ -4,6 +4,5 @@
 
 
 namespace bayes {
-
 }  // namespace bayes
 
