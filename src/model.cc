@@ -6,6 +6,7 @@
 #include <istream>
 #include <iostream>
 
+
 namespace bayes {
 using std::vector;
 using std::ifstream;
@@ -14,25 +15,31 @@ using std::istream;
 vector<Image> image_vector;
 vector<int> image_class;
 
-void CreateList() {
-
-    for (int current = 0; current < 10; current++) {
-
-        Image image;
+void CreateList(std::string input) {
+    int count = input.size() / (kImageSize * kImageSize);
+    Image image = Image();
+    for (int current = 0; current < count; current++) {
+        int char_count = 0;
+        for (int row = 0; row < kImageSize; row++) {
+            for (int col = 0; col < kImageSize; col++) {
+                image.SetPixel(row, col, input[char_count]);
+                char_count++;
+            }
+        }
+        input.erase(0,kImageSize*kImageSize);
         image_vector.push_back(image);
-
     }
-
 }
 
 void RunModel(Model &model) {
-    CreateList();
     for (int image_count = 0; image_count < image_vector.size(); image_count++) {
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) {
                 for (int shade = 0; shade < kNumShades; shade++) {
                     int image_num = image_class[image_count];
-                    model.probs_[row][col][shade][image_num] = ((model.probs_[row][col][shade][image_num] * (image_count - 1)) + GetShadeValue(image_vector[image_count], row, col) / image_count);
+                    if (image_vector[image_count].GetPixel(row, col) == shade) {
+                        model.probs_[row][col][shade][image_num] = ((model.probs_[row][col][shade][image_num] * (image_count - 1)) + GetShadeValue(image_vector[image_count], row, col) / image_count);
+                    }
                 }
             }
         }
@@ -53,16 +60,18 @@ istream& operator>>(istream &input, Model &model) {
     input >> file_name;
     std::ifstream file;
     file.open(file_name);
-    if (!file.is_open()) {
-        std::cout << "Not valid file";
+    if (file.fail()) {
+        std::cout << "Not valid file" << std::endl;
     }
-    char file_data;
-    file_data >> file;
-
-    
+    std::string file_data;
+    while (!file.eof()) {
+        std::string file_line;
+        file >> file_line;
+        file_data += file_line;
+    }
     file.close();
 
-    CreateList();
+    CreateList(file_data);
 }
 
 }  // namespace bayes

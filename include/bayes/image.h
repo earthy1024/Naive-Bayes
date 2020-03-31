@@ -26,6 +26,9 @@ public:
   char GetPixel(int row_index, int col_index) {
       return pixels_[row_index][col_index];
   }
+  void SetPixel(int row_index, int col_index, int shade) {
+      pixels_[row_index][col_index] = shade;
+  }
 
 };
 
