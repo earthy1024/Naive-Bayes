@@ -14,6 +14,7 @@ using std::istream;
 
 vector<Image> image_vector;
 vector<int> image_class;
+vector<double> class_priors;
 std::string image_file;
 std::string label_file;
 
@@ -47,6 +48,7 @@ void RunModel(Model &model) {
     std::cin >> model;
     CreateList(image_vector, image_file);
     CreateLabelList();
+    CalculatePriors();
     for (int image_count = 0; image_count < image_vector.size(); image_count++) {
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) {
@@ -55,8 +57,9 @@ void RunModel(Model &model) {
                     if (image_vector[image_count].GetPixel(row, col) == shade) {
                         int class_total = CalculateNumAppearances(image_num, image_count);
                         model.probs_[row][col][shade][image_num] =
-                                ((model.probs_[row][col][shade][image_num] * (class_total - 1))
-                                + GetShadeValue(image_vector[image_count], row, col)) / class_total;
+                                (kSmoothValue + (model.probs_[row][col][shade][image_num] * (class_total - 1))
+                                + GetShadeValue(image_vector[image_count], row, col)) /
+                                ((kSmoothValue*2) + class_total);
                     }
                 }
             }
@@ -73,7 +76,19 @@ int CalculateNumAppearances(int num_class, int current_index) {
     }
     return count;
 }
-double GetShadeValue(Image &image, int row_index, int col_index) {
+
+void CalculatePriors() {
+    for (int current = 0; current < kNumClasses; current++) {
+        class_priors[current] = (CalculateNumAppearances(current, image_class.size() - 1)
+                / image_class.size());
+    }
+}
+
+double GetPrior(int class_num) {
+    return class_priors[class_num];
+
+
+int GetShadeValue(Image &image, int row_index, int col_index) {
     char pixel_shade = image.GetPixel(row_index, col_index);
     if (pixel_shade == ' ') {
         return 0;

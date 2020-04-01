@@ -37,6 +37,9 @@ constexpr size_t kNumClasses = 10;
 // Shaded or not shaded.
 constexpr size_t kNumShades = 2;
 
+// LaPlace Smoothing Value.
+const int kSmoothValue = 1;
+
 /**
  * Represents a Naive Bayes classification model for determining the
  * likelihood that an individual pixel for an individual class is
@@ -62,7 +65,11 @@ void CreateList(std::vector<Image> &vector, std::string &file);
 
 void RunModel(Model &model);
 
-double GetShadeValue(Image &image, int row_index, int col_index);
+int GetShadeValue(Image &image, int row_index, int col_index);
+
+void CalculatePriors();
+
+double GetPrior(int class_num);
 
 int CalculateNumAppearances(int num_class, int current_index);
 void Print();

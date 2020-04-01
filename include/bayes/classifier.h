@@ -13,7 +13,7 @@ namespace bayes {
 using std::istream;
 void CreateClassifier(Model &model);
 void RunClassifier();
-void AnalyzeImages(int index);
+int AnalyzeImages(int index, Model &model);
 istream& operator>>(istream &input, Model &model);
 }  // namespace bayes
 
