@@ -15,7 +15,8 @@ void CreateClassifier(Model &model) {
     Model class_model = Model();
     RunModel(class_model);
     std::cout << "What is the image file you would like evaluated?" << std::endl;
-    std::cin >> class_model;
+    Classifier classify = Classifier();
+    std::cin >> classify;
     CreateList(evaluation_images, evaluation_file);
 }
 
@@ -23,7 +24,7 @@ void RunClassifier() {
     Model class_model = Model();
     CreateClassifier(class_model);
     for (int image_count = 0; image_count < evaluation_images.size(); image_count++) {
-        image_results[image_count] = AnalyzeImages(image_count, class_model);
+        image_results.push_back(AnalyzeImages(image_count, class_model));
     }
 }
 
@@ -38,7 +39,7 @@ int AnalyzeImages(int index, Model &model) {
         }
     }
     int class_max = 0;
-    int current_prob = 0;
+    double current_prob = 0;
     for (int max = 0; max < kNumClasses; max++) {
         if (posterior_prob[max] > current_prob) {
             class_max = max;
@@ -48,7 +49,14 @@ int AnalyzeImages(int index, Model &model) {
     return class_max;
 }
 
-istream& operator>>(istream &input, Model &model) {
+// testing purposes.
+void PrintResults() {
+    for (int image_result : image_results) {
+        std::cout << image_result << std::endl;
+    }
+}
+
+istream& operator>>(istream &input, Classifier &classifier) {
     std::string file_name;
     std::ifstream file;
     input >> file_name;
@@ -68,5 +76,6 @@ istream& operator>>(istream &input, Model &model) {
     evaluation_file = file_data;
     return input;
 }
+
 }  // namespace bayes
 

@@ -49,6 +49,7 @@ void RunModel(Model &model) {
     CreateList(image_vector, image_file);
     CreateLabelList();
     CalculatePriors();
+
     for (int image_count = 0; image_count < image_vector.size(); image_count++) {
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) {
@@ -79,14 +80,14 @@ int CalculateNumAppearances(int num_class, int current_index) {
 
 void CalculatePriors() {
     for (int current = 0; current < kNumClasses; current++) {
-        class_priors[current] = (CalculateNumAppearances(current, image_class.size() - 1)
+        class_priors.push_back(CalculateNumAppearances(current, image_class.size() - 1)
                 / image_class.size());
     }
 }
 
 double GetPrior(int class_num) {
     return class_priors[class_num];
-
+}
 
 int GetShadeValue(Image &image, int row_index, int col_index) {
     char pixel_shade = image.GetPixel(row_index, col_index);

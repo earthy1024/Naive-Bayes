@@ -11,10 +11,14 @@
 
 namespace bayes {
 using std::istream;
+class Classifier {
+
+};
 void CreateClassifier(Model &model);
 void RunClassifier();
 int AnalyzeImages(int index, Model &model);
-istream& operator>>(istream &input, Model &model);
+void PrintResults();
+istream& operator>>(istream &input, Classifier &classifier);
 }  // namespace bayes
 
 #endif  // BAYES_CLASSIFIER_H_

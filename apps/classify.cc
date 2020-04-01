@@ -16,9 +16,7 @@ DEFINE_string(name, "Clarice", "Your first name");
 DEFINE_bool(happy, false, "Whether the greeting is a happy greeting");
 
 
-int main(int argc, char** argv) {
-  bayes::Model model = bayes::Model();
-  bayes::RunModel(model);
-  bayes::Print();
-
+int main() {
+  bayes::RunClassifier();
+  bayes::PrintResults();
 }
