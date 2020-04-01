@@ -14,6 +14,7 @@ using std::istream;
 class Classifier {
 
 };
+
 void CreateClassifier(Model &model);
 void RunClassifier();
 int AnalyzeImages(int index, Model &model);
