@@ -59,6 +59,11 @@ istream& operator>>(istream &input, Model &model);
 void RunModel(Model &model);
 
 double GetShadeValue(Image &image, int row_index, int col_index);
+
+void Print();
+
+void GetNum();
+
 }  // namespace bayes
 
 

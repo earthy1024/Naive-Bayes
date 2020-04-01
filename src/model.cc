@@ -30,12 +30,14 @@ void CreateList() {
         }
         image_file.erase(0,kImageSize*kImageSize);
         image_vector.push_back(image);
-        image_class.push_back(label_file[current]);
+        image_class.push_back(label_file[current] - '0');
     }
+
 }
 
 void RunModel(Model &model) {
     std::cout << "What is the training file and label file?";
+    std::cin >> model;
     std::cin >> model;
     CreateList();
 
@@ -73,11 +75,11 @@ istream& operator>>(istream &input, Model &model) {
         std::cout << "Not valid file" << std::endl;
     }
     std::string file_data;
-    while (!file.eof()) {
-        std::string file_line;
-        file >> file_line;
-        file_data += file_line;
+    char c;
+    while (file.get(c)) {
+        file_data += c;
     }
+
     file.close();
     if (file_data.find('#') != std::string::npos || file_data.find('+') != std::string::npos) {
         image_file = file_data;
@@ -87,7 +89,17 @@ istream& operator>>(istream &input, Model &model) {
     return input;
 }
 
+void Print() {
+    for (int a = 0; a < kImageSize; a++) {
+        for (int b = 0; b < kImageSize; b++) {
+            std::cout << image_vector[0].GetPixel(a, b);
+        }
+        std::cout << "" << std::endl;
+    }
+}
 
-
+void GetNum() {
+    std::cout << image_class[0];
+}
 }  // namespace bayes
 

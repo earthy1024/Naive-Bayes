@@ -17,18 +17,8 @@ DEFINE_bool(happy, false, "Whether the greeting is a happy greeting");
 
 
 int main(int argc, char** argv) {
-  gflags::SetUsageMessage(
-      "Greets you with your name. Pass --helpshort for options.");
-
-  gflags::ParseCommandLineFlags(&argc, &argv, true);
-
-  if (FLAGS_name.empty()) {
-    std::cerr << "Please provide a name via the --name flag." << std::endl;
-    return EXIT_FAILURE;
-  }
-
-  const std::string puncutation = FLAGS_happy ? "!" : ".";
-
-  std::cout << "Hello, " << FLAGS_name << puncutation << std::endl;
-  return EXIT_SUCCESS;
+  bayes::Model model = bayes::Model();
+  bayes::RunModel(model);
+  bayes::Print();
+  bayes::GetNum();
 }
