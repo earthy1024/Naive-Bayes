@@ -17,30 +17,36 @@ vector<int> image_class;
 std::string image_file;
 std::string label_file;
 
-void CreateList() {
-    int count = image_file.size() / (kImageSize * kImageSize);
-    Image image = Image();
+void CreateList(vector<Image> &vector, std::string &file) {
+    int count = file.size() / (kImageSize * kImageSize);
+
     for (int current = 0; current < count; current++) {
+        Image image = Image();
         int char_count = 0;
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) {
-                image.SetPixel(row, col, image_file[char_count]);
+                image.SetPixel(row, col, file[char_count]);
                 char_count++;
             }
         }
-        image_file.erase(0,kImageSize*kImageSize);
-        image_vector.push_back(image);
-        image_class.push_back(label_file[current] - '0');
+        file.erase(0,kImageSize*kImageSize);
+        vector.push_back(image);
     }
+}
 
+void CreateLabelList() {
+    for (char current : label_file) {
+        image_class.push_back(current - '0');
+    }
 }
 
 void RunModel(Model &model) {
-    std::cout << "What is the training file and label file?";
+    std::cout << "What is the training image file?" << std::endl;
     std::cin >> model;
+    std::cout << "What is the training label file?" << std::endl;
     std::cin >> model;
-    CreateList();
-
+    CreateList(image_vector, image_file);
+    CreateLabelList();
     for (int image_count = 0; image_count < image_vector.size(); image_count++) {
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) {
@@ -93,9 +99,8 @@ istream& operator>>(istream &input, Model &model) {
 void Print() {
     for (int a = 0; a < kImageSize; a++) {
         for (int b = 0; b < kImageSize; b++) {
-            std::cout << image_vector[0].GetPixel(a, b);
+            std::cout << image_vector[4].GetPixel(a, b);
         }
-        std::cout << "" << std::endl;
     }
 }
 

@@ -20,5 +20,5 @@ int main(int argc, char** argv) {
   bayes::Model model = bayes::Model();
   bayes::RunModel(model);
   bayes::Print();
-  bayes::GetNum();
+
 }

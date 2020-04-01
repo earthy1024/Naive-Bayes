@@ -11,6 +11,7 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <vector>
 
 namespace bayes {
 using std::istream;
@@ -54,14 +55,16 @@ class Model {
  public:
   double probs_[kImageSize][kImageSize][kNumClasses][kNumShades];
 };
+
 istream& operator>>(istream &input, Model &model);
+
+void CreateList(std::vector<Image> &vector, std::string &file);
 
 void RunModel(Model &model);
 
 double GetShadeValue(Image &image, int row_index, int col_index);
 
 void Print();
-
 void GetNum();
 
 }  // namespace bayes
