@@ -25,10 +25,19 @@ void RunClassifier() {
     Model class_model = Model();
     CreateClassifier(class_model);
     for (int image_count = 0; image_count < evaluation_images.size(); image_count++) {
-
+        AnalyzeImages(image_count);
     }
 }
 
+void AnalyzeImages(int index) {
+    for (int row = 0; row < kImageSize; row++) {
+        for (int col = 0; col < kImageSize; col++) {
+            if (GetShadeValue(evaluation_images[index], row, col) == 1) {
+
+            }
+        }
+    }
+}
 istream& operator>>(istream &input, Model &model) {
     std::string file_name;
     std::ifstream file;

@@ -53,7 +53,10 @@ void RunModel(Model &model) {
                 for (int shade = 0; shade < kNumShades; shade++) {
                     int image_num = image_class[image_count];
                     if (image_vector[image_count].GetPixel(row, col) == shade) {
-                        model.probs_[row][col][shade][image_num] = ((model.probs_[row][col][shade][image_num] * (image_count - 1)) + GetShadeValue(image_vector[image_count], row, col) / image_count);
+                        int class_total = CalculateNumAppearances(image_num, image_count);
+                        model.probs_[row][col][shade][image_num] =
+                                ((model.probs_[row][col][shade][image_num] * (class_total - 1))
+                                + GetShadeValue(image_vector[image_count], row, col)) / class_total;
                     }
                 }
             }
@@ -61,6 +64,15 @@ void RunModel(Model &model) {
     }
 }
 
+int CalculateNumAppearances(int num_class, int current_index) {
+    int count = 0;
+    for (int current = 0; current < current_index; current++) {
+        if (image_class[current] == num_class) {
+            count++;
+        }
+    }
+    return count;
+}
 double GetShadeValue(Image &image, int row_index, int col_index) {
     char pixel_shade = image.GetPixel(row_index, col_index);
     if (pixel_shade == ' ') {

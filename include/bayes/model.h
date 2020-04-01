@@ -64,6 +64,7 @@ void RunModel(Model &model);
 
 double GetShadeValue(Image &image, int row_index, int col_index);
 
+int CalculateNumAppearances(int num_class, int current_index);
 void Print();
 void GetNum();
 
