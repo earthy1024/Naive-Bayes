@@ -89,6 +89,7 @@ istream& operator>>(istream &input, Model &model) {
     return input;
 }
 
+// for testing
 void Print() {
     for (int a = 0; a < kImageSize; a++) {
         for (int b = 0; b < kImageSize; b++) {
@@ -98,6 +99,7 @@ void Print() {
     }
 }
 
+// for testing
 void GetNum() {
     std::cout << image_class[0];
 }
