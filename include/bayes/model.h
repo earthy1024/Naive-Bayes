@@ -93,6 +93,7 @@ void CalculatePriors();
  */
 int CalculateNumAppearances(int num_class, int current_index);
 
+double GetPrior(int index);
 istream& operator>>(istream &input, Model &model);
 
 void Print();

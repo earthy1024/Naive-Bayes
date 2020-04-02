@@ -31,6 +31,7 @@ void RunClassifier() {
 int AnalyzeImages(int index, Model &model) {
     double posterior_prob[kNumClasses] ;
     for (int current = 0; current < kNumClasses; current++) {
+        posterior_prob[current] = log(GetPrior(current));
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) { // Gets a summation of the logs of each probability
                 int shade = GetShadeValue(evaluation_images[index], row, col);

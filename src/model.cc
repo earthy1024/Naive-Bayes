@@ -87,6 +87,10 @@ void CalculatePriors() {
     }
 }
 
+double GetPrior(int index) {
+    return class_priors[index];
+}
+
 int GetShadeValue(Image &image, int row_index, int col_index) {
     char pixel_shade = image.GetPixel(row_index, col_index);
     if (pixel_shade == ' ') {
