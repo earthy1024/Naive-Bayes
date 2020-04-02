@@ -32,12 +32,14 @@ int AnalyzeImages(int index, Model &model) {
     double posterior_prob[kNumClasses] ;
     for (int current = 0; current < kNumClasses; current++) {
         for (int row = 0; row < kImageSize; row++) {
-            for (int col = 0; col < kImageSize; col++) {
+            for (int col = 0; col < kImageSize; col++) { // Gets a summation of the logs of each probability
                 int shade = GetShadeValue(evaluation_images[index], row, col);
                 posterior_prob[current] += log(model.probs_[row][col][shade][current]);
             }
         }
     }
+
+    // Finds the class number with the highest probability of it occurring.
     int class_max = 0;
     double current_prob = 0;
     for (int max = 0; max < kNumClasses; max++) {

@@ -50,6 +50,7 @@ void RunModel(Model &model) {
     CreateLabelList();
     CalculatePriors();
 
+    // Iterates through each image to calculate the probability of a shade occurring given the class number.
     for (int image_count = 0; image_count < image_vector.size(); image_count++) {
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) {
@@ -57,6 +58,7 @@ void RunModel(Model &model) {
                     int image_num = image_class[image_count];
                     if (image_vector[image_count].GetPixel(row, col) == shade) {
                         int class_total = CalculateNumAppearances(image_num, image_count);
+                        // Implementation of Bayes Theorem as well as Laplace smoothing
                         model.probs_[row][col][shade][image_num] =
                                 (kSmoothValue + (model.probs_[row][col][shade][image_num] * (class_total - 1))
                                 + GetShadeValue(image_vector[image_count], row, col)) /
@@ -83,10 +85,6 @@ void CalculatePriors() {
         class_priors.push_back(CalculateNumAppearances(current, image_class.size() - 1)
                 / image_class.size());
     }
-}
-
-double GetPrior(int class_num) {
-    return class_priors[class_num];
 }
 
 int GetShadeValue(Image &image, int row_index, int col_index) {

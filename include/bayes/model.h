@@ -59,19 +59,42 @@ class Model {
   double probs_[kImageSize][kImageSize][kNumClasses][kNumShades];
 };
 
-istream& operator>>(istream &input, Model &model);
-
+/**
+ * Takes in a reference to an Image vcetor and string of an input file
+ * Converts the file into a series of images
+ * @param vector
+ * @param file
+ */
 void CreateList(std::vector<Image> &vector, std::string &file);
 
+/**
+ * Main function of model.cc
+ * Calculates the probability of a certain shade occurring at a certain index given the class number
+ * @param model
+ */
 void RunModel(Model &model);
 
+/**
+ * Returns 0 or 1 based on the shade of a certain image pixel
+ * @param image
+ * @param row_index
+ * @param col_index
+ * @return
+ */
 int GetShadeValue(Image &image, int row_index, int col_index);
 
+/**
+ * Calculates the prior probability of each class number
+ */
 void CalculatePriors();
 
-double GetPrior(int class_num);
-
+/**
+ * Calculates the number of instances a certain class number occurs so far in the class number vector
+ */
 int CalculateNumAppearances(int num_class, int current_index);
+
+istream& operator>>(istream &input, Model &model);
+
 void Print();
 void GetNum();
 
