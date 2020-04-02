@@ -7,10 +7,13 @@
 #include "model.h"
 #include <iostream>
 #include <istream>
+#include <ostream>
 
 
 namespace bayes {
 using std::istream;
+using std::ostream;
+
 class Classifier {
 };
 
@@ -18,7 +21,7 @@ class Classifier {
  * Creates the aspects of the model.cc file for use in classification
  * @param model
  */
-void CreateClassifier(Model &model);
+Classifier CreateClassifier(Model &model);
 
 /**
  * The main function in classifier.
@@ -35,13 +38,18 @@ void RunClassifier();
  */
 int AnalyzeImages(int index, Model &model);
 
+std::string ConvertVector();
+
 /**
  * Prints out the list of labels for the given images
  */
 void PrintResults();
 
 istream& operator>>(istream &input, Classifier &classifier);
+ostream& operator<<(ostream &output,Classifier &classifier);
+
 }  // namespace bayes
+
 
 #endif  // BAYES_CLASSIFIER_H_
 

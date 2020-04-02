@@ -11,21 +11,23 @@ std::string evaluation_file;
 std::vector<int> image_results;
 std::vector<Image> evaluation_images;
 
-void CreateClassifier(Model &model) {
+Classifier CreateClassifier(Model &model) {
     Model class_model = Model();
     RunModel(class_model);
     std::cout << "What is the image file you would like evaluated?" << std::endl;
     Classifier classify = Classifier();
     std::cin >> classify;
     CreateList(evaluation_images, evaluation_file);
+    return classify;
 }
 
 void RunClassifier() {
     Model class_model = Model();
-    CreateClassifier(class_model);
+    Classifier classifier = CreateClassifier(class_model);
     for (int image_count = 0; image_count < evaluation_images.size(); image_count++) {
         image_results.push_back(AnalyzeImages(image_count, class_model));
     }
+    std::cout << classifier;
 }
 
 int AnalyzeImages(int index, Model &model) {
@@ -52,6 +54,13 @@ int AnalyzeImages(int index, Model &model) {
     return class_max;
 }
 
+std::string ConvertVector() {
+    std::string out;
+    for (int image_result : image_results) {
+        out += (std::to_string(image_result));
+    }
+    return out;
+}
 // testing purposes.
 void PrintResults() {
     for (int image_result : image_results) {
@@ -80,5 +89,13 @@ istream& operator>>(istream &input, Classifier &classifier) {
     return input;
 }
 
+ostream& operator<<(ostream &output, Classifier &classifier) {
+    std::string output_file = ConvertVector();
+    std::ofstream file;
+    file.open("newfile.txt");
+    file << output_file;
+    file.close();
+    return output;
+}
 }  // namespace bayes
 
