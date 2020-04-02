@@ -97,7 +97,7 @@ istream& operator>>(istream &input, Model &model);
 
 void Print();
 void GetNum();
-
+int GetVectorSize();
 }  // namespace bayes
 
 

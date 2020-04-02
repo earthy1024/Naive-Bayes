@@ -8,6 +8,101 @@
 #include <bayes/image.h>
 
 // TODO(you): Remove this unnecessary test case.
-TEST_CASE("Sanity Check", "[addition]") {
-  REQUIRE(1 + 1 == 2);
+TEST_CASE("Test correct image file storage") {
+    std::vector<bayes::Image> vect;
+    std::string file = "                            \n"
+                       "                            \n"
+                       "                            \n"
+                       "                            \n"
+                       "                            \n"
+                       "                +++++##+    \n"
+                       "        +++++######+###+    \n"
+                       "       +##########+++++     \n"
+                       "        #######+##          \n"
+                       "        +++###  ++          \n"
+                       "           +#+              \n"
+                       "           +#+              \n"
+                       "            +#+             \n"
+                       "            +##++           \n"
+                       "             +###++         \n"
+                       "              ++##++        \n"
+                       "                +##+        \n"
+                       "                 ###+       \n"
+                       "              +++###        \n"
+                       "            ++#####+        \n"
+                       "          ++######+\n"
+                       "        ++######+           \n"
+                       "       +######+             \n"
+                       "    ++######+               \n"
+                       "    +####++                 \n"
+                       "                            \n"
+                       "                            \n"
+                       "                            \n"
+                       "                            \n"
+                       "                            \n"
+                       "                            \n"
+                       "                            \n"
+                       "               ++#++        \n"
+                       "              +#####        \n"
+                       "             +######+       \n"
+                       "            +#####+##+      \n"
+                       "           +######++#+      \n"
+                       "          +###++##++#+      \n"
+                       "         +###+ +++  ##+     \n"
+                       "        ++###+      ##+     \n"
+                       "        +##+ +      ###     \n"
+                       "       +##+         ###     \n"
+                       "       ##+          ###     \n"
+                       "      +##+          ##+     \n"
+                       "      +##+         +#+      \n"
+                       "      +##         +##+      \n"
+                       "      +#+       ++#+        \n"
+                       "      +##      +##+         \n"
+                       "      +##+++++###++         \n"
+                       "      +#########+           \n"
+                       "      +#######+             \n"
+                       "       ++###++              \n"
+                       "                            \n"
+                       "                            \n"
+                       "                            \n"
+                       "                           ";
+    bayes::CreateList(vect, file);
+    REQUIRE(vect.size() == 2);
+}
+
+TEST_CASE("Test correct index shades") {
+    std::vector<bayes::Image> vect;
+    std::string file =   "                            \n"
+                         "                            \n"
+                         "                            \n"
+                         "                            \n"
+                         "                            \n"
+                         "                +++++##+    \n"
+                         "        +++++######+###+    \n"
+                         "       +##########+++++     \n"
+                         "        #######+##          \n"
+                         "        +++###  ++          \n"
+                         "           +#+              \n"
+                         "           +#+              \n"
+                         "            +#+             \n"
+                         "            +##++           \n"
+                         "             +###++         \n"
+                         "              ++##++        \n"
+                         "                +##+        \n"
+                         "                 ###+       \n"
+                         "              +++###        \n"
+                         "            ++#####+        \n"
+                         "          ++######+\n"
+                         "        ++######+           \n"
+                         "       +######+             \n"
+                         "    ++######+               \n"
+                         "    +####++                 \n"
+                         "                            \n"
+                         "                            \n"
+                         "                            ";
+    bayes::CreateList(vect, file);
+    bayes::Image image = vect[0];
+    REQUIRE(bayes::GetShadeValue(image, 0, 0) == 0);
+    REQUIRE(bayes::GetShadeValue(image, 6, 18) == 1);
+    REQUIRE(bayes::GetShadeValue(image, 8, 2) == 0);
 }

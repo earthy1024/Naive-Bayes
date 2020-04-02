@@ -134,5 +134,10 @@ void Print() {
 void GetNum() {
     std::cout << image_class[0];
 }
+
+// for testing
+int GetVectorSize() {
+    return image_vector.size();
+}
 }  // namespace bayes
 
