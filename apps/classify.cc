@@ -18,5 +18,5 @@ DEFINE_bool(happy, false, "Whether the greeting is a happy greeting");
 
 int main() {
   bayes::RunClassifier();
-  bayes::PrintResults();
+  // bayes::PrintResults();
 }

@@ -12,8 +12,7 @@ std::vector<int> image_results;
 std::vector<Image> evaluation_images;
 
 Classifier CreateClassifier(Model &model) {
-    Model class_model = Model();
-    RunModel(class_model);
+    RunModel(model);
     std::cout << "What is the image file you would like evaluated?" << std::endl;
     Classifier classify = Classifier();
     std::cin >> classify;
@@ -37,16 +36,24 @@ int AnalyzeImages(int index, Model &model) {
         for (int row = 0; row < kImageSize; row++) {
             for (int col = 0; col < kImageSize; col++) { // Gets a summation of the logs of each probability
                 int shade = GetShadeValue(evaluation_images[index], row, col);
-                posterior_prob[current] += log(model.probs_[row][col][shade][current]);
+                posterior_prob[current] += (double) log(model.probs_[row][col][shade][current]);
             }
         }
     }
+
+    if (index == 2) {
+        for (int a = 0; a < kNumClasses; a++) {
+            std::cout << posterior_prob[a];
+            std::cout << model.probs_[10][10][0][a];
+        }
+    }
+
 
     // Finds the class number with the highest probability of it occurring.
     int class_max = 0;
     double current_prob = 0;
     for (int max = 0; max < kNumClasses; max++) {
-        if (posterior_prob[max] > current_prob) {
+        if (posterior_prob[max] >= current_prob) {
             class_max = max;
             current_prob = posterior_prob[max];
         }
